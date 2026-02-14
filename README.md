@@ -79,4 +79,5 @@ Dies ist ein Open-Source-Projekt! Wenn du Verbesserungen hast (z.B. Passwort-Ver
 ## ⚖️ Lizenz
 
 
-Veröffentlicht unter der MIT **[Lizenz]()**. Siehe LICENSE für Details.
+Veröffentlicht unter der MIT **[Lizenz](https://github.com/xavoyx/simple-auth-system?tab=MIT-1-ov-file)**. Siehe LICENSE für Details.
+
