@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAuth | Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-main: #111214;
+            --bg-card: #181818;
+            --bg-input: #2b2d31;
+            --primary: #5865F2;
+            --error: #ED4245;
+            --success: #3BA561;
+            --text-header: #FFFFFF;
+            --text-normal: #DBDEE1;
+            --text-muted: #949CF7;
+        }
+
+        body {
+            font-family: 'Lexend Deca', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-normal);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid #2B2D31;
+        }
+
+        h1 { font-weight: 900; color: var(--text-header); margin-bottom: 8px; font-size: 28px; }
+        p { color: var(--text-muted); font-weight: 400; margin-bottom: 24px; }
+
+        /* Error Message Styling */
+        #status-msg {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .input-group { text-align: left; margin-bottom: 18px; }
+        label { display: block; text-transform: uppercase; font-size: 12px; font-weight: 700; color: var(--text-normal); margin-bottom: 8px; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-input);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Lexend Deca', sans-serif;
+            box-sizing: border-box;
+            transition: border 0.2s;
+        }
+
+        input:focus { outline: none; border-color: var(--primary); }
+
+        .btn-main {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Lexend Deca', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-main:hover { background-color: #4752C4; transform: translateY(-1px); }
+        .btn-main:active { transform: translateY(0); }
+
+        .toggle-link {
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .toggle-link:hover { color: white; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div class="auth-card">
+    <h1 id="auth-title">Willkommen zurück!</h1>
+    <p id="auth-subtitle">Wir freuen uns, dich wiederzusehen!</p>
+
+    <div id="status-msg"></div>
+
+    <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="name@beispiel.de">
+    </div>
+
+    <div class="input-group">
+        <label>Passwort</label>
+        <input type="password" id="password" placeholder="••••••••">
+    </div>
+
+    <button class="btn-main" id="submit-btn" onclick="handleSubmit()">Einloggen</button>
+    <div class="toggle-link" id="toggle-auth" onclick="toggleMode()">Noch keinen Account? Registrieren</div>
+</div>
+
+<script>
+    let isLogin = true;
+
+    function toggleMode() {
+        isLogin = !isLogin;
+        document.getElementById('auth-title').innerText = isLogin ? 'Willkommen zurück!' : 'Account erstellen';
+        document.getElementById('auth-subtitle').innerText = isLogin ? 'Wir freuen uns, dich wiederzusehen!' : 'Werde Teil unserer Community.';
+        document.getElementById('submit-btn').innerText = isLogin ? 'Einloggen' : 'Registrieren';
+        document.getElementById('toggle-auth').innerText = isLogin ? 'Noch keinen Account? Registrieren' : 'Bereits einen Account? Login';
+        document.getElementById('status-msg').style.display = 'none';
+    }
+
+    function showMsg(text, isError = true) {
+        const msgBox = document.getElementById('status-msg');
+        msgBox.innerText = text;
+        msgBox.style.display = 'block';
+        msgBox.style.backgroundColor = isError ? 'var(--error)' : 'var(--success)';
+    }
+
+    async function handleSubmit() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+
+        if(!email || !password) return showMsg("Bitte fülle alle Felder aus.");
+
+        try {
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, username: email.split('@')[0] })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                if (isLogin) {
+                    localStorage.setItem('token', data.token);
+                    window.location.href = '/dashboard.html';
+                } else {
+                    showMsg("Account erstellt! Du kannst dich jetzt einloggen.", false);
+                    toggleMode();
+                }
+            } else {
+                showMsg(data.message || data.error || "Etwas ist schiefgelaufen.");
+            }
+        } catch (err) {
+            showMsg("Verbindung zum Server fehlgeschlagen.");
+        }
+    }
+</script>
+</body>
+</html>

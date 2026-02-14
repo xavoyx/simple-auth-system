@@ -1,0 +1,31 @@
+{
+  "name": "openauth-nodejs",
+  "version": "1.0.0",
+  "description": "Ein sicheres Login- & Registrierungssystem mit JWT und MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Ready to go! Start with 'npm start'\" && exit 0"
+  },
+  "keywords": [
+    "auth",
+    "nodejs",
+    "express",
+    "jwt",
+    "mongodb",
+    "opensource"
+  ],
+  "author": "Finn Conradt",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
