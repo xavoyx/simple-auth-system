@@ -20,8 +20,8 @@ Befolge diese Schritte, um das System auf deinem lokalen Rechner zu starten:
 
 ### 1. Repository klonen
 ```bash
-git clone [https://github.com/DEIN-NUTZERNAME/openauth-nodejs.git](https://github.com/DEIN-NUTZERNAME/openauth-nodejs.git)
-cd openauth-nodejs
+git clone [https://github.com/xavoyx/simple-auth-system](https://github.com/xavoyx/simple-auth-system)
+cd simple-auth-system
 ```
 
 ## 📊 Abhängigkeiten installieren
@@ -77,5 +77,6 @@ Dies ist ein Open-Source-Projekt! Wenn du Verbesserungen hast (z.B. Passwort-Ver
 #### 5. Erstelle einen Pull Request
 
 ## ⚖️ Lizenz
+
 
 Veröffentlicht unter der MIT **[Lizenz]()**. Siehe LICENSE für Details.
