@@ -2,7 +2,7 @@
 
 Ein modulares, sicheres und leicht anpassbares Login- & Registrierungssystem. Entwickelt mit Fokus auf Best-Practices für modernes Web-Engineering.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/xavoyx/simple-auth-system?tab=MIT-1-ov-file)
 
 ## 🚀 Features
 
@@ -80,4 +80,5 @@ Dies ist ein Open-Source-Projekt! Wenn du Verbesserungen hast (z.B. Passwort-Ver
 
 
 Veröffentlicht unter der MIT **[Lizenz](https://github.com/xavoyx/simple-auth-system?tab=MIT-1-ov-file)**. Siehe LICENSE für Details.
+
 
